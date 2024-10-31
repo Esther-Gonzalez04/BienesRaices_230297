@@ -1,6 +1,6 @@
 import express from 'express';
-import generalRoutes from '/routes/generalRoutes.js';
-import userRoutes from '/routes/userRoutes.js'
+import generalRoutes from './Routes/generalRoutes.js'
+import userRoutes from './Routes/userRoutes.js'
 //const express=require(`express`);//Importar la libreria para crear un servidor web
 
 //Ibstanciar nuestra aplicacion web
@@ -28,6 +28,6 @@ app.get("/QuienSoy", function(req, res){
     })
 })*/
 
-app.use('/', generalRoutes);
-
-app.use('/usuario/', userRoutes);
+//Routing - Enrutamiento
+app.use('/',generalRoutes);
+app.use('/usuario/',userRoutes);
