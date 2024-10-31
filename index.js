@@ -8,6 +8,11 @@ const app=express()
 
 // configuramos nuestro servidor web
  
+//Habilitar Pug 
+app.set('view engine', 'pug')
+app.set('views', './views')
+
+
 const port=3000;
 app.listen(port, ()=>{
     console.log(`La aplicación ha iniciado al puerto: ${port}`);
@@ -30,4 +35,5 @@ app.get("/QuienSoy", function(req, res){
 
 //Routing - Enrutamiento
 app.use('/',generalRoutes);
-app.use('/usuario/',userRoutes);
+///app.use('/usuario/',userRoutes);
+app.use('/auth/',userRoutes);

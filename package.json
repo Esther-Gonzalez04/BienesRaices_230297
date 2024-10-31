@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Proyecto de Clase para la Unidad 2, de la asignatura AWOS utilizando Node.js",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "saluda": "node saluda.js",
@@ -31,7 +31,8 @@
   },
   "homepage": "https://github.com/Esther-Gonzalez04/BienesRaices_230297#readme",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "pug": "^3.0.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
