@@ -1,4 +1,6 @@
 import express from 'express';
+import generalRoutes from '/routes/generalRoutes.js';
+import userRoutes from '/routes/userRoutes.js'
 //const express=require(`express`);//Importar la libreria para crear un servidor web
 
 //Ibstanciar nuestra aplicacion web
@@ -12,7 +14,7 @@ app.listen(port, ()=>{
 })
 
 //Probamos las rutas para poder presentar mensajes al usuario a través del navegador
-app.get("/", function(req,res){
+/*app.get("/", function(req,res){
     res.send("Hola mundo desde Node, a través del navegador")
 })
 
@@ -24,4 +26,8 @@ app.get("/QuienSoy", function(req, res){
         "asignatura": "Aplicaciones web orientada a servicios"
 
     })
-})
+})*/
+
+app.use('/', generalRoutes);
+
+app.use('/usuario/', userRoutes);
