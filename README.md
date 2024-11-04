@@ -11,6 +11,7 @@ Para poder demostrar y aprender la creación de consumo de Interfaces de Program
 |8.|17/10/2024|Nuevo repositorio del Proyecto Implementando .gitignore|1|✅Finalizada|
 |9.|22/10/2024|Creación de una aplicación web usando Express|11|✅Finalizada|
 |10.|24/10/2024|Operaciones básicas de un API, a travéz de los verbos HTTP|12|✅Finalizada|
+|11.|24/10/2024|Operaciones básicas de un API, a travéz de los verbos HTTP|--|Activa👀|
 
 ✅Finalizada
 
