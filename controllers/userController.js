@@ -2,7 +2,7 @@
 const formularioLogin=(rquest,response)=>{
         response.render("auth/login", {
             autenticado: false, 
-            page: "Ingresa a la pltaforma"
+            page: "Ingresa a la plataforma"
 })};
 
 const formularioRegister=(rquest,response)=>{
