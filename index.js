@@ -1,10 +1,21 @@
 import express from 'express';
 import generalRoutes from './Routes/generalRoutes.js'
 import userRoutes from './Routes/userRoutes.js'
+import db from './config/db.js'
 //const express=require(`express`);//Importar la libreria para crear un servidor web
 
 //Ibstanciar nuestra aplicacion web
 const app=express()
+
+//conexión a la base de datos.
+try{
+    await db.authenticate();
+    console.log('Conexión correcta a la Base de Datos')
+
+}catch(error){
+
+    console.log(error)
+}
 
 // configuramos nuestro servidor web
  
