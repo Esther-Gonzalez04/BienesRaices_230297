@@ -11,12 +11,16 @@ const formularioRegister=(rquest,response)=>{
         
 })};
 
+const registrar = (req, res) =>{
+    console.log('Registrando...')
+}
+
 const formularioPasswordRecovery=(rquest,response)=>{
     response.render("auth/passwordRecovery", {
         page: "Recupera tu contraseña"
 
 })};
 
-export {formularioLogin, formularioRegister, formularioPasswordRecovery}
+export {formularioLogin, formularioRegister, registrar, formularioPasswordRecovery}
 
 

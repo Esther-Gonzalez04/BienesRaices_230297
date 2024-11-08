@@ -10,11 +10,11 @@ const app=express()
 //conexión a la base de datos.
 try{
     await db.authenticate();
-    console.log('Conexión correcta a la Base de Datos')
+    console.log('Conexión correcta a la Base de Datos');
 
 }catch(error){
 
-    console.log(error)
+    console.log(error);
 }
 
 // configuramos nuestro servidor web

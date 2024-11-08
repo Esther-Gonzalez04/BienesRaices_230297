@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {formularioLogin, formularioRegister, formularioPasswordRecovery} from '../controllers/userController.js';
+import {formularioLogin, formularioRegister, registrar, formularioPasswordRecovery} from '../controllers/userController.js';
 const router = express.Router()
 
 //GET- se utiliza para la lectura de datos e informacion del servidor al cliente

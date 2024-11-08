@@ -22,4 +22,4 @@ const Usuario = db.define('usuario',{
     confirmado:DataTypes.BOOLEAN
 })
 
-export default Usuario
+export default Usuario;
