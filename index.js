@@ -1,7 +1,7 @@
 import express from 'express';
 import generalRoutes from './Routes/generalRoutes.js'
 import userRoutes from './Routes/userRoutes.js'
-import db from './config/db.js'
+import db from './db/config.js'
 //const express=require(`express`);//Importar la libreria para crear un servidor web
 
 //Ibstanciar nuestra aplicacion web

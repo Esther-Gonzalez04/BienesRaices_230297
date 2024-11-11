@@ -12,8 +12,8 @@ const db =new Sequelize (process.env.BD_NOMBRE,process.env.BD_USER, process.env.
     pool: {
         max:5,
         min:0,
-        acquire:30000,
-        idle:10000
+        acquire:30000, //los minisegundos que va a estar haciendo peticiones y si no le contesta emite error 
+        idle:10000 //la duerme y la pasa a una prioridad baja 
     },
     operatorsAliases: false
 });

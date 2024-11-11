@@ -12,7 +12,7 @@ router.get("/busquedaPorID/:id", (request, response)=>{
 })  //2 componentes de una petición - ruta -callback
 
 //POST- se utiliza para el envio de datos e inforamción del cliente al servidor 
-router.post("/newUser/:name/:email/:password", function(req, res){
+router.post("/newUser", function(req, res){
     res.send(`Se esta solicitado la creación de un nuevo usuario de nombre: ${req.params.name},
         asociado al correo electrónico: ${req.params.email} con la contraseña: ${req.params.password}`)
 }) 

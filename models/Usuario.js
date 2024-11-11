@@ -1,8 +1,8 @@
 import{DataTypes} from 'sequelize'
 import db from '../config/db.js'
 
-const Usuario = db.define('usuario',{
-    nombre:{
+const Usuario = db.define('tbb_users',{
+    name:{
         type:DataTypes.STRING,
         allowNull: false
     },
@@ -19,7 +19,7 @@ const Usuario = db.define('usuario',{
         
     },
     token:DataTypes.STRING,
-    confirmado:DataTypes.BOOLEAN
+    confirmed:DataTypes.BOOLEAN
 })
 
-export default Usuario;
+export default User;
