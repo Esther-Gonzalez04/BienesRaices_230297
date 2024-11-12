@@ -1,4 +1,6 @@
-import { request } from 'express'
+
+import{check, validationResult} from 'express-validator'
+import { request, response } from 'express'
 import User from '../models/User.js'
 
 
@@ -14,7 +16,14 @@ const formularioRegister=(rquest,response)=>{
         
 })};
 
+
 const createNewUser = async (req, res) =>{
+
+    //await check('nombre_usuario').notEmpty().run(req)
+    //let resultado = validationResult(req)
+    //response.json(resultado.array());
+
+
     console.log('Registrando...');
     console.log(req.body);
 
@@ -22,7 +31,7 @@ const createNewUser = async (req, res) =>{
         name: req.body.nombre_usuario,
         email: req.body.correo_usuario,
         password: req.body.pass_usuario,
-    })
+    });
     res.json(newUser)
 
 }
