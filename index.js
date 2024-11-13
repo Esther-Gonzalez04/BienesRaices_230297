@@ -12,7 +12,7 @@ app.use(express.urlencoded({encoded:true}))
 
 //conexión a la base de datos.
 try{
-    await db.authenticate();
+    await db.authenticate();  //verifica las credenciales del usuario
     db.sync(); //sincronizo las tablas con los modelos
     console.log('Conexión correcta a la Base de Datos');
 
