@@ -21,13 +21,13 @@ const createNewUser = async (req, res) =>{
     console.log('Registrando...');
     console.log(req.body);
 
-    await check('nombre_usuario').notEmpty().withMessage('El nombre no puede ir vacío').run(req)
-    await check('correo_usuario').notEmpty().withMessage('El correo electrónico es un campo obligatorio').isEmail().withMessage('No es un email correcto').run(req)
-    await check('pass_usuario').notEmpty().withMessage('La contraseña es un campo obligatorio').isLength({min:8}).withMessage('La contraseña debería tener al menos 8 carácteres').run(req)
-    await check('pass2_usuario').equals(req.body.pass_usuario).withMessage('La contraseña no coinciden').run(req)
+    await check('nombre_usuario').notEmpty().withMessage('El nombre no puede ir vacío').run(req);
+    await check('correo_usuario').notEmpty().withMessage('El correo electrónico es un campo obligatorio').isEmail().withMessage('No es un email correcto').run(req);
+    await check('pass_usuario').notEmpty().withMessage('La contraseña es un campo obligatorio').isLength({min:8}).withMessage('La contraseña debería tener al menos 8 carácteres').run(req);
+    await check('pass2_usuario').notEmpty().withMessage('La confirmación de contraseña es un campo obligatorio').equals(req.body.pass_usuario).withMessage('La contraseña no coinciden').run(req);
 
 
-    let result= validationResult(req)
+    let result= validationResult(req);
 
     //return res.json
     //validación que el resultado este vacío
@@ -52,10 +52,10 @@ const createNewUser = async (req, res) =>{
         })
     
     }
-    res.json(newUser)
+    res.json(newUser);
 }
 
-const formularioPasswordRecovery=(rquest,response)=>{
+const formularioPasswordRecovery=(request,response)=>{
     response.render("auth/passwordRecovery", {
         page: "Recupera tu contraseña"
 
