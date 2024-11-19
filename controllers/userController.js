@@ -3,6 +3,7 @@ import{check, validationResult} from 'express-validator'
 import { request, response } from 'express'
 import User from '../models/User.js'
 import {generatetid} from '../helpers/tokens.js'
+import { emailAfterRegister } from '../helpers/email.js'
 
 
 const formularioLogin=(rquest,response)=>{
@@ -73,6 +74,13 @@ const createNewUser = async (req, res) =>{
         password: req.body.pass_usuario,
         token: generatetid()
     });
+
+    //ENVIAR EL CORREO DE CONFIGURACIÓN 
+    emailAfterRegister({
+        name: newUser.name,
+        email: newUser.email,
+        token: newUser.token
+    })
     
     res.render('templates/message',{
         page: 'cuenta creada Correctamente',
