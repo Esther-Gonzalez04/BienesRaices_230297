@@ -56,15 +56,15 @@ const createNewUser = async (req, res) =>{
     if(existingUser){
         return res.render("auth/register", {
             page: 'Error al intentar crear la cuenta de Usuario',
-            errors: [{msg: `El usuario ${email} ya se encuentra registrando.]`}],
+            errors: [{msg: `El usuario ${email} ya se encuentra registrando.`}],
             user:{
                 name:name
             }
         })
     }
 
-    console.log("Registrando a nuevo usuario");
-    console.log(req.body);
+    /*console.log("Registrando a nuevo usuario");
+    console.log(req.body);*/
 
 
     //registrando los datos en la base de datos.
@@ -75,7 +75,7 @@ const createNewUser = async (req, res) =>{
         token: generatetid()
     });
 
-    //ENVIAR EL CORREO DE CONFIGURACIÓN 
+    //ENVIAR EL CORREO DE CONFIRMACIÓN 
     emailAfterRegister({
         name: newUser.name,
         email: newUser.email,
@@ -84,19 +84,30 @@ const createNewUser = async (req, res) =>{
     
     res.render('templates/message',{
         page: 'cuenta creada Correctamente',
-        message: 'Hemos Enviado un Email de Confirmación, '
+        message: `Hemos Enviado un Email de Confirmación al correo: ${email} para verificar tu cuenta`
     })
 
     //res.json(newUser);
     //return;
 }
 
+//función de comprobación de cuenta
+const confirm=(req, res)=>{
+    
+    //validarToken = Si existe
+    //Confirmar cuenta 
+    //Enviar mensaje
+    const {token} = req.params
+    console.log("Error")
+    console.log(`Intentando confirmar la cuenta con el token: ${token}` )
+}
+
 const formularioPasswordRecovery=(request,response)=>{
-    response.render("auth/passwordRecovery", {
+    response.render('auth/passwordRecovery', {
         page: "Recupera tu contraseña"
 
 })};
 
-export {formularioLogin, formularioRegister, createNewUser, formularioPasswordRecovery}
+export {formularioLogin, formularioRegister,confirm, createNewUser, formularioPasswordRecovery}
 
 

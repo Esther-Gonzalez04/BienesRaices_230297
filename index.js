@@ -2,6 +2,11 @@ import express from 'express';
 import generalRoutes from './Routes/generalRoutes.js'
 import userRoutes from './Routes/userRoutes.js'
 import db from './db/config.js'
+import dotenv from 'dotenv'
+
+dotenv.config({path: '.env'})
+
+
 //const express=require(`express`);//Importar la libreria para crear un servidor web
 
 //Ibstanciar nuestra aplicacion web
@@ -32,7 +37,7 @@ app.use(express.static('./public'));
 
 
 // configuramos nuestro servidor web
-const port=3000;
+const port= process.env.BACKEND_PORT; 
 app.listen(port, ()=>{
     console.log(`La aplicación ha iniciado al puerto: ${port}`);
 })

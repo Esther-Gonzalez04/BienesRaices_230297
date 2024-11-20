@@ -26,7 +26,7 @@ const emailAfterRegister=async (newUserData)=>{
         Bienvenido a la plataforma BienesRaíces, elsitio seguro donde podrás buscar, comprar y ofertar propiedades a travéz de internet.
         <br>
         <p>Ya sólo necesitamos que confirmes la cuenta que create, dando click a la siguiente
-        liga: <a href=""> Confirmar cuenta</a></p>
+        liga: <a href="${process.env.BACKEND_DOMAIN}:${process.env.BACKEND_PORT}/auth/confirmAccount/${token}"> Confirmar cuenta</a></p>
         <br>
         <p>Si tu no has creado la cuenta, ignora este mensaje.</p>` 
     })
