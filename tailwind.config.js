@@ -11,6 +11,7 @@ export default {
       'p_yellow': '#E7E247',
       'black': '#000',
       'white': '#FFF',
+      'red':'#FF0000',
       'gray':{
         300: '#d1d5db',
         400: '#9ca3af',

@@ -7,14 +7,6 @@ import dotenv from 'dotenv'
 dotenv.config({path: '.env'})
 
 
-//const express=require(`express`);//Importar la libreria para crear un servidor web
-
-//Ibstanciar nuestra aplicacion web
-const app=express()
-
-//Habilitar la lectura de datos de formularios
-app.use(express.urlencoded({encoded:true}))
-
 //conexión a la base de datos.
 try{
     await db.authenticate();  //verifica las credenciales del usuario
@@ -25,6 +17,15 @@ try{
 
     console.log(error);
 }
+
+
+//const express=require(`express`);//Importar la libreria para crear un servidor web
+
+//Ibstanciar nuestra aplicacion web
+const app=express()
+
+//Habilitar la lectura de datos de formularios
+app.use(express.urlencoded({ extended: true }));
 
 
  
