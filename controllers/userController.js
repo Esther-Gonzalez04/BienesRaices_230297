@@ -2,7 +2,7 @@ import { check, validationResult } from 'express-validator';
 import User from '../models/User.js';
 import { generatetid } from '../helpers/tokens.js';
 import { emailAfterRegister } from '../helpers/email.js';
-
+import moment from 'moment';
 // Renderizar formulario de inicio de sesión
 const formularioLogin = (req, res) => {
     res.render('auth/login', {
@@ -15,52 +15,62 @@ const formularioLogin = (req, res) => {
 const formularioRegister = (req, res) => {
     res.render('auth/register', {
         page: 'Crea una nueva cuenta',
+        nombre_usuario: '',  // Inicializamos vacíos los campos
+        correo_usuario: '',
     });
 };
 
 // Crear un nuevo usuario
 const createNewUser = async (req, res) => {
-    // Validaciones
+    // Realizar validaciones en los campos del formulario
     await check('nombre_usuario').notEmpty().withMessage('El nombre no puede ir vacío').run(req);
     await check('correo_usuario').notEmpty().withMessage('El correo electrónico es un campo obligatorio')
         .isEmail().withMessage('No es un email correcto').run(req);
     await check('pass_usuario').notEmpty().withMessage('La contraseña es un campo obligatorio')
         .isLength({ min: 8 }).withMessage('La contraseña debería tener al menos 8 caracteres').run(req);
     await check('pass2_usuario').equals(req.body.pass_usuario).withMessage('Las contraseñas no coinciden').run(req);
+    await check('fecha_nacimiento').notEmpty().withMessage('La fecha de nacimiento es obligatoria')
+        .isDate().withMessage('La fecha no es válida').run(req);
 
+    // Verificar los resultados de las validaciones
     const result = validationResult(req);
 
-    // Si hay errores, regresar al formulario con los mensajes
+    // Si hay errores, regresar al formulario con los mensajes y los valores ingresados por el usuario
     if (!result.isEmpty()) {
         return res.render('auth/register', {
             page: 'Error al intentar crear la cuenta',
             errors: result.array(),
-            user: {
-                name: req.body.nombre_usuario,
-                email: req.body.correo_usuario,
-            },
+            nombre_usuario: req.body.nombre_usuario,  // Mantener el nombre ingresado
+            correo_usuario: req.body.correo_usuario,  // Mantener el correo ingresado
+            fecha_nacimiento: req.body.fecha_nacimiento, // Mantener la fecha de nacimiento
         });
     }
 
     // Desestructurar los parámetros del request
-    const { nombre_usuario: name, correo_usuario: email, pass_usuario: password } = req.body;
+    const { nombre_usuario: name, correo_usuario: email, pass_usuario: password, fecha_nacimiento } = req.body;
 
-    // Verificar que el usuario no exista
+    // Verificar si el usuario ya existe en la base de datos
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
         return res.render('auth/register', {
             page: 'Error al intentar crear la cuenta de Usuario',
             errors: [{ msg: `El usuario ${email} ya está registrado.` }],
-            user: { name },
+            nombre_usuario: name,  // Mantener el nombre ingresado
+            correo_usuario: email, // Mantener el correo ingresado
+            fecha_nacimiento, // Mantener la fecha de nacimiento ingresada
         });
     }
 
-    // Crear nuevo usuario
+    // Convertir la fecha de nacimiento a UTC
+    const fechaNacimiento = moment(req.body.fecha_nacimiento).utc().format('YYYY-MM-DD HH:mm:ss');
+
+    // Crear un nuevo usuario
     const newUser = await User.create({
         name,
         email,
         password,
-        token: generatetid(),
+        fecha_nacimiento: fechaNacimiento,  // Almacenar la fecha de nacimiento en UTC
+        token: generatetid(),  // Generar un token para la confirmación
     });
 
     // Enviar correo de confirmación
@@ -70,13 +80,15 @@ const createNewUser = async (req, res) => {
         token: newUser.token,
     });
 
+    // Mostrar un mensaje de éxito
     res.render('templates/message', {
         page: 'Cuenta creada correctamente',
         message: `Hemos enviado un email de confirmación al correo: ${email}`,
     });
 };
 
-// Confirmar cuenta
+
+// Confirmar cuenta (si el usuario hace clic en el enlace de confirmación del correo)
 const confirm = async (req, res) => {
     const { token } = req.params;
 
@@ -91,9 +103,9 @@ const confirm = async (req, res) => {
     }
 
     // Confirmar la cuenta
-    user.token = null;
-    user.confirmacion = true; // Cambiar a true
-    await user.save(); // Guardar cambios
+    user.token = null;  // Eliminar el token
+    user.confirmacion = true;  // Marcar la cuenta como confirmada
+    await user.save();  // Guardar cambios en la base de datos
 
     res.render('auth/confirmAccount', {
         page: 'Cuenta Confirmada',
