@@ -13,6 +13,7 @@ Para poder demostrar y aprender la creación de consumo de Interfaces de Program
 |10.|24/10/2024|Operaciones básicas de un API, a travéz de los verbos HTTP|12|✅Finalizada|
 |11.|05/11/2024|Configuración de hojas de estilo utilizando Tailwind|13|✅Finalizada|
 |12.|23/11/24|Implementación de validación en formulario y duplicidad en base de datos|30|✅Finalizada|
+|13.|--/--/----|Implementación de recuperación de contraseñas|Pendiente|⭐Activo|
 ✅Finalizada
 
 ## Autor
