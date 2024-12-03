@@ -16,6 +16,7 @@ block contenido
         .mt-8.mx-auto.max-w-md 
             .bg-white.py-8.px-4.shadow
                 form(method="POST" action='/auth/newUser' noValidate).space-y-5.px-6
+                    input(type="hidden" name="_csrf" value= csrfToken)
                     div.relative
                         label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Nombre completo:
                         div(class="absolute top-7 right-3 text-gray-400")
