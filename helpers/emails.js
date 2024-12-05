@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 
 dotenv.config({path: '.env'})
 
-const emailAfterRegister = async (newUserData) => {
+const registerEmail = async (newUserData) => {
     const transport = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
@@ -33,7 +33,7 @@ const emailAfterRegister = async (newUserData) => {
                         Para que puedas empezar a disfrutar de nuestros servicios, solo necesitas confirmar tu cuenta. Haz clic en el siguiente enlace para completar tu registro:
                     </p>
                     <p style="font-size: 18px; text-align: center;">
-                        <a href="${process.env.BACKEND_DOMAIN}:${process.env.BACKEND_PORT}/auth/confirmAccount/${token}" style="text-decoration: none; background-color: #E7E247; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">Confirmar cuenta</a>
+                        <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirm/${token}" style="text-decoration: none; background-color: #E7E247; color: white; padding: 10px 20px; border-radius: 5px; font-weight: bold;">Confirmar cuenta</a>
                     </p>
                     <p style="font-size: 18px; line-height: 1.6;">
                         Si no creaste esta cuenta, por favor ignora este mensaje.
@@ -85,7 +85,7 @@ const passwordRecoveryEmail = async (data) => {
                     Haz clic en el botón de abajo para restablecer tu contraseña:
                 </p>
                 <div style="text-align: center; margin: 20px 0;">
-                    <a href="${process.env.BACKEND_DOMAIN}:${process.env.PORT ?? 3000}/auth/passwordRecovery/${token}" 
+                    <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/passwordRecovery/${token}" 
                     style="background-color: #1E90FF; color: white; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px;">
                     Restablecer Contraseña
                     </a>
@@ -105,4 +105,4 @@ const passwordRecoveryEmail = async (data) => {
         `,
     });
 }
-export { emailAfterRegister, passwordRecoveryEmail };
+export { registerEmail, passwordRecoveryEmail };

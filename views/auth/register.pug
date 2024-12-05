@@ -2,84 +2,93 @@ extends ../layout/index
 
 block contenido
     div.py-10
-        h1.text-center.text-4xl.my-10.font-extrabold.text-p_yellow Bienes
-            span.font-normal.text-black Raices
+        h1.text-center.font-extrabold.my-10.text-4xl.text-p_yellow Bienes 
+            span.font-normal.text-black Raíces
         h2.text-center.font-extrabold.text-2xl= page
 
         if errors
             div(class="max-w-md mx-auto my-10")
-                each error in errors 
-                    div(class="bg-red text-white p-3 rounded-md shadow-lg mb-3 animate__animated animate__fadeIn relative") 
-                        span(class="uppercase text-xs font-bold")= error.msg
-                        button(class="text-white absolute top-2 right-2 cursor-pointer" onclick="this.parentElement.remove()") &times;
-
-        .mt-8.mx-auto.max-w-md 
+                each error in errors
+                    div(class="bg-red text-white p-4 rounded-md flex items-center justify-between mb-2 alert fade-in")
+                        if error.msg == "El nombre no puede ir vacío"
+                            i(class="fas fa-user-times mr-2")  
+                        else if error.msg == "El correo electrónico es un campo obligatorio"
+                            i(class="fas fa-envelope-open-text mr-2")  
+                        else if error.msg == "El correo electrónico no tiene el formato correcto"
+                            i(class="fas fa-exclamation-triangle mr-2")
+                        else if error.msg == "La contraseña es un campo obligatorio"
+                            i(class="fas fa-key mr-2")  
+                        else if error.msg == "El Password debe ser de al menos 8 caracteres"
+                            i(class="fas fa-lock mr-2") 
+                        p(class="text-sm font-bold")= error.msg
+                        button(class="ml-2 bg-transparent border-0 text-white" onclick="this.parentElement.style.display='none'") &times;
+                        
+        .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
-                form(method="POST" action='/auth/newUser' noValidate).space-y-5.px-6
+                form(method="POST" action="/auth/newUser" ).space-y-5.px-6
                     input(type="hidden" name="_csrf" value= csrfToken)
-                    div.relative
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Nombre completo:
-                        div(class="absolute top-7 right-3 text-gray-400")
-                            i(class="fa fa-user")
-                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(
-                            type="text"  
-                            placeholder="Ej. Esther González Peralta" 
-                            name="nombre_usuario" 
-                            value=nombre_usuario || ""
-                        )
-
-                    div.relative
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Correo electrónico:
-                        div(class="absolute top-7 right-3 text-gray-400")
-                            i(class="fa fa-envelope")
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(
-                            type="email"  
-                            placeholder="Ej: esther@gmail.com" 
-                            name="correo_usuario" 
-                            value=correo_usuario || ""
-                        )
-
-                    div.relative
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Contraseña:
-                        div(class="absolute top-7 right-3 text-gray-400")
-                            i(class="fa fa-lock")
-                        input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(
-                            type="password"  
-                            placeholder="Mínimo de 8 caracteres" 
-                            name="pass_usuario"
-                        )
-
-                    div.relative
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Confirmación contraseña:
-                        div(class="absolute top-7 right-3 text-gray-400")
-                            i(class="fa fa-lock")
-                        input#passsword-confirm.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(
-                            type="password"  
-                            placeholder="Mínimo de 8 caracteres" 
-                            name="pass2_usuario"
-                        )
-
-                    div.relative
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Fecha de nacimiento:
-                        div(class="absolute top-7 right-3 text-gray-400")
-                            
-                        input#dob.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(
-                            type="date" 
-                            name="fecha_nacimiento"
-                            value=fecha_nacimiento || ""
-                        )
-
+                    div
+                        label.block.text-sm.uppercase.text-black.mb-2.font-bold Nombre Completo: 
+                        input#name.w-full.px-3.py-2.border-2.border-black.rounded-md(type="text" placeholder="Ej. Juanito Peréz" name="name" value=User && User.name || "")
+                    div
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold Email de Registro: 
+                        input#email.w-full.px-3.py-2.border-2.border-black.rounded-md(type="email" placeholder="Ej. usuario@paisdelasmaravillas.com" name="correo_usuario" value=User && User.email || "")
+                    div
+                        label.block.text-sm.uppercase.text-black.mb-2.font-bold Fecha de Nacimiento: 
+                        input#birthdate.w-full.px-3.py-2.border-2.border-black.rounded-md(type="date" name="fecha_nacimiento" value=User && User.fecha_nacimiento || "")
+                    div
+                        label.block.text-sm.uppercase.text-black.mb-2.font-bold Contraseña: 
+                        input#password.w-full.px-3.py-2.border-2.border-black.rounded-md(type="password" placeholder="Minimo de 8 caracteres" name="pass_usuario")
+                    div
+                        label.block.text-sm.uppercase.text-black.mb-2.font-bold Confirmar Contraseña: 
+                        input#password2.w-full.px-3.py-2.border-2.border-black.rounded-md(type="password" placeholder="Minimo de 8 caracteres" name="pass2_usuario")
                     div.flex.items-center.justify-between
-                        a.text-p_blue-200.text-xs(href="/auth/login" class="hover:underline decoration-2 hover:decoration-red-500") ¿Ya tienes cuenta? Inicia sesión
-                        a.text-p_blue-200.text-xs(href="/auth/passwordRecovery" class="hover:underline decoration-2 hover:decoration-red-500") Olvide mi contraseña
-                    input(class="w-full bg-p_yellow hover:bg-p_blue-200 text-white font-bold py-3 cursor-pointer" type="submit" value="Crear cuenta")
+                        a.text-gray-500.text-xs(href="/auth/login" class="hover:underline decoration-2 hover:decoration-azulrey") ¿Ya tienes cuenta? Inicia Sesión
+                        a.text-gray-500.text-xs(href="/auth/passwordRecovery" class="hover:underline decoration-2 hover:decoration-azulrey") Recuperar Contraseña
+                    input(class="w-full bg-p_yellow hover:bg-p_blue-200 text-black font-bold py-3 cursor-pointer" type="submit" value="Crear Cuenta")
 
     script.
-        document.querySelectorAll('.bg-red').forEach((msg, index) => {
+        document.querySelectorAll('.alert').forEach(error => {
             setTimeout(() => {
-                msg.classList.add('animate__fadeOut');
+                error.classList.add('fade-out');  
                 setTimeout(() => {
-                    msg.style.display = 'none';
-                }, 1000);
-            }, 7000 + (index * 500)); 
+                    error.style.display = 'none';
+                }, 1000);  
+            }, 7000);  
         });
+
+    style.
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+     
+        .fade-out {
+            animation: fadeOut 1s ease-in-out;
+        }
+
+        .alert:hover {
+            transform: translateX(10px);  
+            cursor: pointer; 
+            transition: transform 0.3s ease; 
+        }

@@ -2,24 +2,19 @@ extends ../layout/index
 
 block contenido
     div.py-10
-        h1.text-center.text-4xl.my-10.font-extrabold.text-p_yellow Bienes
-            span.font-normal.text-black Raices
-        h2.text-center.font-extrabold.text-2xl= page
-
-        .mt-8.mx-auto.max-w-md 
+        h1.text-center.font-extrabold.my-10.text-4xl.text-p_yellow Bienes 
+            span.font-normal.text-black Raíces
+        h2.text-center.font-extrabold.text-2xl=page
+        .mt-8.mx-auto.max-w-md
             .bg-white.py-8.px-4.shadow
-                form.space-y-5.px-6
-                    
+                form(action="").space-y-5.px-6
                     div
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Correo electrónico:
-                        input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(type="email"  placeholder="Ej: esther@gmail.com" name="correo_usuario")
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold Email de Registro: 
+                        input#email.w-full.px-3.py-2.border-2.border-black.rounded-md(type="email" placeholder="Ej. usuario@paisdelasmaravillas.com" name="correo-usuario")
                     div
-                        label.block.text-sm.uppercase.text-gray-600.md-2.font-nold Contraseña:
-                        input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder.gray-400(type="password"  placeholder="Mínimo de 8 carácteres" name="pss_usuario")
-
+                        label.block.text-sm.uppercase.text-gray-500.mb-2.font-bold Contraseña: 
+                        input#password.w-full.px-3.py-2.border-2.border-black.rounded-md(type="password" placeholder="Minimo de 8 caracteres" name="pass-usuario")
                     div.flex.items-center.justify-between
-                        a.text-p_blue-200.text-xs(href="/auth/createAccount" class="hover:underline decoration-2 hover:decoration-red-500") ¿Aún no tienes cuenta? Registrate
-                        a.text-p_blue-200.text-xs(href="/auth/passwordRecovery" class="hover:underline decoration-2 hover:decoration-red-500") Olvide mi contraseña
-                    
-                    
-                    input(class="w-full bg-p_yellow hover:bg-p_blue-200 text-white font-bold py-3 cursor-pointer" type="submit" value="Iniciar sesión")
+                        a.text-black.text-xs(href="/auth/createAccount" class="hover:underline decoration-2 hover:decoration-pigmentgreen") ¿No tienes cuenta? Registrate
+                        a.text-black.text-xs(href="/auth/passwordRecovery" class="hover:underline decoration-2 hover:decoration-pigmentgreen") Recuperar Contraseña
+                    input(class="w-full  bg-p_yellow hover:bg-p_blue-200 text-black font-bold py-3 cursor-pointer " type="submit" value="Ingresar")
