@@ -2,7 +2,7 @@ import { check, validationResult } from "express-validator";
 import User from "../models/User.js";
 import bcrypt from 'bcrypt';
 import moment from 'moment';
-import { generateId, generarJWT } from "../helpers/tokens.js";
+import { generateId, generarJWT} from "../helpers/tokens.js";
 import { registerEmail, passwordRecoveryEmail } from '../helpers/emails.js';
 
 // Mostrar formulario de login
@@ -78,7 +78,7 @@ const authenticate = async (req, res) => {
         // Almacenar el token en una cookie
         return res.cookie('_token', token, {
             httpOnly: true,
-        }).redirect('/myProperties');
+        }).redirect('/properties/myProperties');
     } catch (error) {
         console.error(error);
         return res.status(500).render('auth/login', {
@@ -96,7 +96,6 @@ const formularioRegister = (request, response) => {
         csrfToken: request.csrfToken(),
     });
 };
-
 // Registrar nuevo usuario
 const createNewUser = async (req, res) => {
     // Validación de los campos
@@ -112,17 +111,15 @@ const createNewUser = async (req, res) => {
     await check('pass2_usuario')
         .equals(req.body.pass_usuario).withMessage('La contraseña debe coincidir con la anterior')
         .run(req);
-     // Validación de la fecha de nacimiento
-    await check('fecha_nacimiento')
-     .notEmpty().withMessage('La fecha de nacimiento es obligatoria')
-     .custom((value) => {
-         const age = moment().diff(moment(value, 'YYYY-MM-DD'), 'years');
-         if (age < 18) {
-             throw new Error('Debes ser mayor de 18 años para registrarte');
-         }
-         return true;
-     })
-     .run(req);
+    // Validación de la fecha de nacimiento
+    await check('fecha_nacimiento').notEmpty().withMessage('La fecha de nacimiento es obligatoria').custom((value) => {
+        const date = moment.utc(value, 'YYYY-MM-DD')
+        const age = moment().diff(date, 'years');
+        if (age < 18) {
+            throw new Error('Debes ser mayor de 18 años para registrarte');
+        }
+        return true;
+    }).run(req);
 
     let resultado = validationResult(req);
 
@@ -138,7 +135,7 @@ const createNewUser = async (req, res) => {
         });
     }
 
-    const { name, correo_usuario: email, pass_usuario: password } = req.body;
+    const { name, correo_usuario: email, pass_usuario: password, fecha_nacimiento } = req.body;
 
     // Verificar si el usuario ya existe
     const existingUser = await User.findOne({ where: { email } });
@@ -160,6 +157,7 @@ const createNewUser = async (req, res) => {
         email,
         password,
         token: generateId(),
+        fecha_nacimiento,
     });
 
     // Enviar email de confirmación

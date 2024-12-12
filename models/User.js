@@ -4,16 +4,20 @@ import bcrypt from 'bcrypt'
 const User=db.define('tbb_users',{
     name:{
         type:DataTypes.STRING,
-        allownull:false
+        allowNull:false
     },
     email:{
         type:DataTypes.STRING,
-        allownull:false,
+        allowNull:false,
         unique:true
     },
     password:{
         type:DataTypes.STRING,
-        allownull:false
+        allowNull:false
+    },
+    fecha_nacimiento:{
+        type: DataTypes.DATEONLY,
+        allowNull: false 
     },
     token:DataTypes.STRING,
     confirmed:DataTypes.BOOLEAN
